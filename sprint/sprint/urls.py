@@ -29,5 +29,5 @@ router.register(r'pereval', views.PerevalViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
+    path('', include(router.urls))
 ]
