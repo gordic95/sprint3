@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import User, Pereval, Coords, Images, Level
 from .serializers import UserSerializer, PerevalSerializer, CoordsSerializer, ImagesSerializer, LevelSerializer
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 import django_filters
 
@@ -33,7 +33,6 @@ class PerevalViewSet(viewsets.ModelViewSet):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['status', 'title', 'add_time', ]
 
-        # метод для редактирования существующей записи, если она в статусе new
     def update(self):
         instance = self.get_object()
         if instance.status == 'new':
@@ -64,37 +63,16 @@ class PerevalViewSet(viewsets.ModelViewSet):
 
 
     # список данных обо всех объектах, которые пользователь с почтой <email> отправил на сервер.
-    def list(self):
-        queryset = Pereval.objects.all()
+    def get_queryset(self):
         email = self.request.query_params.get('email')
         if email is not None:
-            queryset = queryset.filter(user__email=email)
-        return Response(PerevalSerializer(queryset, many=True).data)
+            return Pereval.objects.filter(user__email=email)
+        else:
+            return Pereval.objects.all()
 
 
 
 
-
-
-
-
-    #
-    # добавляем фильтры, они помогут выводить перевалы
-
-    # def get_queryset(self):
-    #     queryset = Pereval.objects.all()
-    #     pereval_id = self.request.query_params.get('pereval_id')
-    #     if pereval_id is not None:
-    #         queryset = queryset.filter(id=pereval_id)
-    #     return queryset
-
-    # метод для редактирования существующей записи, если она в статусе new
-    # def update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     if instance.status == 'new':
-    #         return super().update(request, *args, **kwargs)
-    #     else:
-    #         return Response({'error': 'Нельзя изменить данные'}, status=400)
 
 
 

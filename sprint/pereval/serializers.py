@@ -17,7 +17,7 @@ class CoordsSerializer(serializers.ModelSerializer):
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Images
-        fields = ('title', 'data')
+        fields = ('title', 'image')
 
 
 class LevelSerializer(serializers.ModelSerializer):
@@ -30,7 +30,8 @@ class PerevalSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     coords = CoordsSerializer()
     level = LevelSerializer()
-    images = serializers.SerializerMethodField()
+    # images = ImagesSerializer(many=True, required=False)
+    # images = serializers.SerializerMethodField()
 
 
     class Meta:
@@ -51,3 +52,7 @@ class PerevalSerializer(serializers.ModelSerializer):
             if data_user is None or any(user_field_for_validation):
                 raise serializers.ValidationError('Нельзя изменить данные пользователя')
         return data
+
+
+
+
