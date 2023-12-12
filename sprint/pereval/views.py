@@ -31,7 +31,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
     serializer_class = PerevalSerializer
     # добавляем фильтры, они помогут выводить перевалы по id
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filterset_fields = ['status', 'title', 'add_time']
+    filterset_fields = ['status', 'title', 'add_time', ]
 
         # метод для редактирования существующей записи, если она в статусе new
     def update(self):
@@ -63,6 +63,13 @@ class PerevalViewSet(viewsets.ModelViewSet):
             )
 
 
+    # список данных обо всех объектах, которые пользователь с почтой <email> отправил на сервер.
+    def list(self):
+        queryset = Pereval.objects.all()
+        email = self.request.query_params.get('email')
+        if email is not None:
+            queryset = queryset.filter(user__email=email)
+        return Response(PerevalSerializer(queryset, many=True).data)
 
 
 
