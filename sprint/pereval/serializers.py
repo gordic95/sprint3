@@ -30,8 +30,8 @@ class PerevalSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     coords = CoordsSerializer()
     level = LevelSerializer()
-    # images = ImagesSerializer(many=True, required=False)
-    # images = serializers.SerializerMethodField()
+    images = ImagesSerializer(many=True)
+
 
 
     class Meta:
