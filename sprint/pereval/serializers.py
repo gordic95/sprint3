@@ -31,7 +31,11 @@ class PerevalSerializer(serializers.ModelSerializer):
     coords = CoordsSerializer()
     level = LevelSerializer()
     images = ImagesSerializer(many=True)
+<<<<<<< HEAD
     # images = serializers.SerializerMethodField()
+=======
+
+>>>>>>> cfa7d37d139d9a4b31cd2170be2adaa42f3ad2cb
 
 
     class Meta:
