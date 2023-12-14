@@ -33,6 +33,32 @@ class PerevalViewSet(viewsets.ModelViewSet):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['status', 'title', 'add_time', ]
 
+    def create(self, request, *args, **kwargs):
+        serializer = PerevalSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {
+                    'state': 'status.HTTP_200_OK',
+                    'message': 'Данные успешно добавлены'
+                }
+            )
+        if status.HTTP_400_BAD_REQUEST:
+            return Response(
+                {
+                    'state': 'status.HTTP_400_BAD_REQUEST',
+                    'message': 'Ошибка добавления данных'
+                }
+            )
+        if status.HTTP_500_INTERNAL_SERVER_ERROR:
+            return Response(
+                {
+                    'state': 'status.HTTP_500_INTERNAL_SERVER_ERROR',
+                    'message': 'Ошибка сервера'
+                }
+            )
+
+
     def update(self):
         instance = self.get_object()
         if instance.status == 'new':

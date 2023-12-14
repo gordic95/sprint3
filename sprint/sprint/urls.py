@@ -27,10 +27,10 @@ from django.views.generic import TemplateView
 router = routers.DefaultRouter()
 router.register(r'pereval', views.PerevalViewSet)
 
-router.register(r'user', views.UserViewSet)
-router.register(r'coords', views.CoordsViewSet)
-router.register(r'images', views.ImagesViewSet)
-router.register(r'level', views.LevelViewSet)
+# router.register(r'user', views.UserViewSet)
+# router.register(r'coords', views.CoordsViewSet)
+# router.register(r'images', views.ImagesViewSet)
+# router.register(r'level', views.LevelViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
